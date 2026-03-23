@@ -17,7 +17,9 @@ delivery:
 
 command:
   enabled: true
-  aliases: ["vannounce", "announce"]
+  aliases: ["vannounce", "vannouce", "announce"]
+  require-permission: false
+  permission: "velocityannouces.admin"
 
 # Supports MiniMessage + <modern>...</modern>.
 # type can be: chat, actionbar, title, bossbar

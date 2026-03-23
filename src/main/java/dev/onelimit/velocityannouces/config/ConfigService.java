@@ -85,6 +85,8 @@ public final class ConfigService {
 
         Map<String, Object> command = map(root.get("command"));
         boolean commandEnabled = bool(command.get("enabled"), true);
+        boolean commandRequirePermission = bool(command.get("require-permission"), false);
+        String commandPermission = string(command.get("permission"), "velocityannouces.admin");
 
         List<String> aliases = new ArrayList<>();
         Object aliasesNode = command.get("aliases");
@@ -135,7 +137,16 @@ public final class ConfigService {
             }
         }
 
-        return new PluginConfig(autoEnabled, Math.max(5, intervalSeconds), randomPick, commandEnabled, aliases, entries);
+        return new PluginConfig(
+            autoEnabled,
+            Math.max(5, intervalSeconds),
+            randomPick,
+            commandEnabled,
+            aliases,
+            commandRequirePermission,
+            commandPermission,
+            entries
+        );
     }
 
     private Map<String, Object> map(Object input) {

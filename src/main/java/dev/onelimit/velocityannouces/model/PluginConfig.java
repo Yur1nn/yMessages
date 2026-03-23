@@ -9,6 +9,8 @@ public final class PluginConfig {
     private final boolean randomPick;
     private final boolean commandEnabled;
     private final List<String> commandAliases;
+    private final boolean commandRequirePermission;
+    private final String commandPermission;
     private final List<AnnouncementEntry> announcements;
 
     public PluginConfig(
@@ -17,6 +19,8 @@ public final class PluginConfig {
         boolean randomPick,
         boolean commandEnabled,
         List<String> commandAliases,
+        boolean commandRequirePermission,
+        String commandPermission,
         List<AnnouncementEntry> announcements
     ) {
         this.autoEnabled = autoEnabled;
@@ -24,11 +28,13 @@ public final class PluginConfig {
         this.randomPick = randomPick;
         this.commandEnabled = commandEnabled;
         this.commandAliases = commandAliases;
+        this.commandRequirePermission = commandRequirePermission;
+        this.commandPermission = commandPermission;
         this.announcements = announcements;
     }
 
     public static PluginConfig defaults() {
-        return new PluginConfig(true, 120, true, true, List.of("announce", "vannounce"), new ArrayList<>());
+        return new PluginConfig(true, 120, true, true, List.of("announce", "vannounce"), false, "velocityannouces.admin", new ArrayList<>());
     }
 
     public boolean autoEnabled() {
@@ -49,6 +55,14 @@ public final class PluginConfig {
 
     public List<String> commandAliases() {
         return commandAliases;
+    }
+
+    public boolean commandRequirePermission() {
+        return commandRequirePermission;
+    }
+
+    public String commandPermission() {
+        return commandPermission;
     }
 
     public List<AnnouncementEntry> announcements() {

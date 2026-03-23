@@ -5,6 +5,7 @@ import com.velocitypowered.api.command.SimpleCommand;
 import dev.onelimit.velocityannouces.VelocityAnnoucesPlugin;
 import dev.onelimit.velocityannouces.announce.AnnouncementService;
 import dev.onelimit.velocityannouces.model.AnnounceMode;
+import dev.onelimit.velocityannouces.model.PluginConfig;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
@@ -14,8 +15,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public final class AnnounceCommand implements SimpleCommand {
-    private static final String PERMISSION = "velocityannouces.admin";
-
     private final VelocityAnnoucesPlugin plugin;
     private final AnnouncementService announcementService;
     private final MiniMessage miniMessage;
@@ -31,7 +30,9 @@ public final class AnnounceCommand implements SimpleCommand {
         CommandSource source = invocation.source();
         String[] args = invocation.arguments();
 
-        if (!source.hasPermission(PERMISSION)) {
+        PluginConfig config = plugin.currentConfig();
+        boolean shouldCheckPermission = config.commandRequirePermission() && !config.commandPermission().isBlank();
+        if (shouldCheckPermission && !source.hasPermission(config.commandPermission())) {
             source.sendMessage(msg("<red>You do not have permission."));
             return;
         }

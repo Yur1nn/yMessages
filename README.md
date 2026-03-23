@@ -40,6 +40,7 @@ Output jar:
 - `announcer`: scheduler behavior (`enabled`, `interval-seconds`, `selection`).
 - `delivery`: shared defaults for title and bossbar rendering.
 - `command`: command enable toggle + aliases.
+- `command`: command enable toggle, aliases, and permission behavior.
 - `messages.auto`: announcement list.
 
 Each message entry supports MiniMessage and `<modern>...</modern>`.
@@ -56,6 +57,13 @@ Message type keys:
 - `/vannounce reload`
 - `/vannounce send <chat|actionbar|title|bossbar> <message>`
 - Title subtitle separator for command send: `|`
+
+Default aliases include `vannounce`, `vannouce` (typo-friendly), and `announce`.
+
+Permission behavior is configurable:
+
+- `command.require-permission: false` means everyone can use command.
+- `command.require-permission: true` + `command.permission: velocityannouces.admin` enforces permission.
 
 Example:
 

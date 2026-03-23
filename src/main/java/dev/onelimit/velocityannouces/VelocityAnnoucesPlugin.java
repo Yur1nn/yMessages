@@ -56,6 +56,10 @@ public final class VelocityAnnoucesPlugin {
         announcementService.applyConfig(config);
     }
 
+    public PluginConfig currentConfig() {
+        return config != null ? config : PluginConfig.defaults();
+    }
+
     private void registerCommand() {
         if (!config.commandEnabled()) {
             logger.info("Announcement command disabled via config.");
