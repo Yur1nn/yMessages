@@ -4,5 +4,11 @@
   "version": "1.0.0",
   "description": "Lightweight announcement plugin for Velocity",
   "authors": ["OneLimit"],
+  "dependencies": [
+    {
+      "id": "ycorevelocity",
+      "optional": false
+    }
+  ],
   "main": "dev.onelimit.velocityannouces.VelocityAnnoucesPlugin"
 }

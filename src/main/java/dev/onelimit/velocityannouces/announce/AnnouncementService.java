@@ -7,10 +7,9 @@ import dev.onelimit.velocityannouces.VelocityAnnoucesPlugin;
 import dev.onelimit.velocityannouces.model.AnnounceMode;
 import dev.onelimit.velocityannouces.model.AnnouncementTypeConfig;
 import dev.onelimit.velocityannouces.model.PluginConfig;
-import dev.onelimit.velocityannouces.text.ModernTextFormatter;
+import dev.onelimit.ycore.velocity.api.text.CoreTextRenderer;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
 
 import java.time.Duration;
@@ -23,8 +22,7 @@ import java.util.concurrent.TimeUnit;
 public final class AnnouncementService {
     private final VelocityAnnoucesPlugin plugin;
     private final ProxyServer server;
-    private final MiniMessage miniMessage;
-    private final ModernTextFormatter modernFormatter;
+    private final CoreTextRenderer textRenderer;
     private final Random random;
 
     private ScheduledTask chatTask;
@@ -42,8 +40,7 @@ public final class AnnouncementService {
     public AnnouncementService(VelocityAnnoucesPlugin plugin, ProxyServer server) {
         this.plugin = plugin;
         this.server = server;
-        this.miniMessage = MiniMessage.miniMessage();
-        this.modernFormatter = new ModernTextFormatter();
+        this.textRenderer = new CoreTextRenderer();
         this.random = new Random();
         this.config = PluginConfig.defaults();
         this.chatIndex = 0;
@@ -331,11 +328,7 @@ public final class AnnouncementService {
     }
 
     private Component render(String input) {
-        if (input == null || input.isEmpty()) {
-            return Component.empty();
-        }
-        String processed = modernFormatter.applyModernTag(input);
-        return miniMessage.deserialize(processed);
+        return textRenderer.render(input);
     }
 
     private String applyProgressToken(String rawInput, float progress) {
