@@ -1,4 +1,4 @@
-package dev.onelimit.velocityannouces.model;
+package dev.onelimit.ymessages.model;
 
 public final class AnnouncementEntry {
     private final AnnounceMode mode;
@@ -97,3 +97,4 @@ public final class AnnouncementEntry {
         return animationSpeed;
     }
 }
+

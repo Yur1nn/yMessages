@@ -1,12 +1,12 @@
-package dev.onelimit.velocityannouces.announce;
+package dev.onelimit.ymessages.announce;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.scheduler.ScheduledTask;
-import dev.onelimit.velocityannouces.VelocityAnnoucesPlugin;
-import dev.onelimit.velocityannouces.model.AnnounceMode;
-import dev.onelimit.velocityannouces.model.AnnouncementTypeConfig;
-import dev.onelimit.velocityannouces.model.PluginConfig;
+import dev.onelimit.ymessages.YMessagesPlugin;
+import dev.onelimit.ymessages.model.AnnounceMode;
+import dev.onelimit.ymessages.model.AnnouncementTypeConfig;
+import dev.onelimit.ymessages.model.PluginConfig;
 import dev.onelimit.ycore.velocity.api.text.CoreTextRenderer;
 import dev.onelimit.ycore.velocity.api.util.CorePlaceholders;
 import dev.onelimit.ycore.velocity.api.util.CoreValueParsers;
@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.TimeUnit;
 
 public final class AnnouncementService {
-    private final VelocityAnnoucesPlugin plugin;
+    private final YMessagesPlugin plugin;
     private final ProxyServer server;
     private final CoreTextRenderer textRenderer;
     private final Random random;
@@ -39,7 +39,7 @@ public final class AnnouncementService {
     private int titleIndex;
     private int bossbarIndex;
 
-    public AnnouncementService(VelocityAnnoucesPlugin plugin, ProxyServer server) {
+    public AnnouncementService(YMessagesPlugin plugin, ProxyServer server) {
         this.plugin = plugin;
         this.server = server;
         this.textRenderer = new CoreTextRenderer();
@@ -356,3 +356,4 @@ public final class AnnouncementService {
         }
     }
 }
+

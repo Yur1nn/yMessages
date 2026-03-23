@@ -1,4 +1,4 @@
-package dev.onelimit.velocityannouces.model;
+package dev.onelimit.ymessages.model;
 
 public enum AnnounceMode {
     CHAT,
@@ -18,3 +18,4 @@ public enum AnnounceMode {
         }
     }
 }
+

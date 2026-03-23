@@ -1,11 +1,11 @@
-package dev.onelimit.velocityannouces.command;
+package dev.onelimit.ymessages.command;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
-import dev.onelimit.velocityannouces.VelocityAnnoucesPlugin;
-import dev.onelimit.velocityannouces.announce.AnnouncementService;
-import dev.onelimit.velocityannouces.model.AnnounceMode;
-import dev.onelimit.velocityannouces.model.PluginConfig;
+import dev.onelimit.ymessages.YMessagesPlugin;
+import dev.onelimit.ymessages.announce.AnnouncementService;
+import dev.onelimit.ymessages.model.AnnounceMode;
+import dev.onelimit.ymessages.model.PluginConfig;
 import dev.onelimit.ycore.velocity.api.text.CoreTextRenderer;
 import net.kyori.adventure.text.Component;
 
@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public final class AnnounceCommand implements SimpleCommand {
-    private final VelocityAnnoucesPlugin plugin;
+    private final YMessagesPlugin plugin;
     private final AnnouncementService announcementService;
     private final CoreTextRenderer textRenderer;
 
-    public AnnounceCommand(VelocityAnnoucesPlugin plugin, AnnouncementService announcementService) {
+    public AnnounceCommand(YMessagesPlugin plugin, AnnouncementService announcementService) {
         this.plugin = plugin;
         this.announcementService = announcementService;
         this.textRenderer = new CoreTextRenderer();
@@ -46,7 +46,7 @@ public final class AnnounceCommand implements SimpleCommand {
         switch (sub) {
             case "reload" -> {
                 plugin.reload();
-                source.sendMessage(msg("<green>VelocityAnnouces reloaded."));
+                source.sendMessage(msg("<green>yMessages reloaded."));
             }
             case "send" -> handleSend(source, args);
             default -> sendUsage(source);
@@ -105,3 +105,4 @@ public final class AnnounceCommand implements SimpleCommand {
         return all.stream().filter(entry -> entry.startsWith(lower)).toList();
     }
 }
+

@@ -1,3 +1,3 @@
-rootProject.name = "VelocityAnnouces"
+rootProject.name = "yMessages"
 
 includeBuild("../yCore-Velocity")

@@ -1,4 +1,4 @@
-package dev.onelimit.velocityannouces;
+package dev.onelimit.ymessages;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandManager;
@@ -8,16 +8,16 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import dev.onelimit.velocityannouces.announce.AnnouncementService;
-import dev.onelimit.velocityannouces.command.AnnounceCommand;
-import dev.onelimit.velocityannouces.config.ConfigService;
-import dev.onelimit.velocityannouces.model.PluginConfig;
+import dev.onelimit.ymessages.announce.AnnouncementService;
+import dev.onelimit.ymessages.command.AnnounceCommand;
+import dev.onelimit.ymessages.config.ConfigService;
+import dev.onelimit.ymessages.model.PluginConfig;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
 import java.util.List;
 
-public final class VelocityAnnoucesPlugin {
+public final class YMessagesPlugin {
     private final ProxyServer server;
     private final Logger logger;
     private final Path dataDirectory;
@@ -27,7 +27,7 @@ public final class VelocityAnnoucesPlugin {
     private PluginConfig config;
 
     @Inject
-    public VelocityAnnoucesPlugin(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
+    public YMessagesPlugin(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
         this.server = server;
         this.logger = logger;
         this.dataDirectory = dataDirectory;
@@ -41,7 +41,7 @@ public final class VelocityAnnoucesPlugin {
         reload();
         registerCommand();
 
-        logger.info("VelocityAnnouces initialized.");
+        logger.info("yMessages initialized.");
     }
 
     @Subscribe
@@ -93,3 +93,4 @@ public final class VelocityAnnoucesPlugin {
         manager.register(meta, new AnnounceCommand(this, announcementService));
     }
 }
+

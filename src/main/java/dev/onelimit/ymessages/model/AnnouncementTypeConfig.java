@@ -1,4 +1,4 @@
-package dev.onelimit.velocityannouces.model;
+package dev.onelimit.ymessages.model;
 
 import java.util.List;
 
@@ -78,3 +78,4 @@ public final class AnnouncementTypeConfig {
         return animationSpeed;
     }
 }
+

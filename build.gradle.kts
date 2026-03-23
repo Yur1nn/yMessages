@@ -2,8 +2,12 @@ plugins {
     java
 }
 
-group = "dev.onelimit.velocityannouces"
+group = "dev.onelimit.ymessages"
 version = "1.0.0"
+
+base {
+    archivesName.set("ymessages")
+}
 
 java {
     toolchain {

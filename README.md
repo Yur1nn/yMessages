@@ -1,4 +1,4 @@
-# VelocityAnnouces
+# yMessages
 
 Lightweight announcement plugin for Velocity with a clean, maintainable configuration layout.
 
@@ -28,14 +28,14 @@ gradle build
 
 Output jar:
 
-`build/libs/VelocityAnnouces-1.0.0.jar`
+`build/libs/ymessages-1.0.0.jar`
 
 ## Install
 
 1. Build the jar.
 2. Put it in your Velocity `plugins` folder.
 3. Start/restart proxy once to generate config.
-4. Edit `plugins/velocityannouces/config.yml`.
+4. Edit `plugins/ymessages/config.yml`.
 5. Reload with command.
 
 ## Config Structure
@@ -59,7 +59,7 @@ The configuration is organized into separate sections for each announcement type
 ### Example Config
 
 ```yaml
-# VelocityAnnouces Configuration
+# yMessages Configuration
 # Config Version: This is tracked for future schema upgrades.
 config-version: 2
 
@@ -75,7 +75,7 @@ command:
   enabled: true
   aliases: ["vannounce", "vannouce", "announce"]
   require-permission: false
-  permission: "velocityannouces.admin"
+  permission: "ymessages.admin"
 
 chat:
   announcements:
@@ -169,7 +169,7 @@ Default aliases include `vannounce`, `vannouce` (typo-friendly), and `announce`.
 Permission behavior is configurable:
 
 - `command.require-permission: false` means everyone can use command.
-- `command.require-permission: true` + `command.permission: velocityannouces.admin` enforces permission.
+- `command.require-permission: true` + `command.permission: ymessages.admin` enforces permission.
 
 Example:
 
@@ -177,7 +177,7 @@ Example:
 
 ## Permission
 
-- `velocityannouces.admin`
+- `ymessages.admin`
 
 ## Compatibility Note
 

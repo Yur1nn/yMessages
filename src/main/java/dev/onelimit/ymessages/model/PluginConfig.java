@@ -1,4 +1,4 @@
-package dev.onelimit.velocityannouces.model;
+package dev.onelimit.ymessages.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public final class PluginConfig {
             true, 
             List.of("announce", "vannounce"), 
             false, 
-            "velocityannouces.admin",
+            "ymessages.admin",
             empty, empty, empty, empty
         );
     }
@@ -92,3 +92,4 @@ public final class PluginConfig {
         return bossbarConfig;
     }
 }
+

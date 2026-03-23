@@ -1,8 +1,8 @@
-package dev.onelimit.velocityannouces.config;
+package dev.onelimit.ymessages.config;
 
-import dev.onelimit.velocityannouces.model.AnnounceMode;
-import dev.onelimit.velocityannouces.model.AnnouncementTypeConfig;
-import dev.onelimit.velocityannouces.model.PluginConfig;
+import dev.onelimit.ymessages.model.AnnounceMode;
+import dev.onelimit.ymessages.model.AnnouncementTypeConfig;
+import dev.onelimit.ymessages.model.PluginConfig;
 import dev.onelimit.ycore.velocity.api.config.ConfigValueReader;
 import dev.onelimit.ycore.velocity.api.config.YamlConfigLoader;
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ public final class ConfigService {
         Map<String, Object> command = ConfigValueReader.map(root.get("command"));
         boolean commandEnabled = ConfigValueReader.bool(command.get("enabled"), true);
         boolean commandRequirePermission = ConfigValueReader.bool(command.get("require-permission"), false);
-        String commandPermission = ConfigValueReader.string(command.get("permission"), "velocityannouces.admin");
+        String commandPermission = ConfigValueReader.string(command.get("permission"), "ymessages.admin");
 
         List<String> aliases = new ArrayList<>();
         Object aliasesNode = command.get("aliases");
@@ -129,3 +129,4 @@ public final class ConfigService {
         );
     }
 }
+

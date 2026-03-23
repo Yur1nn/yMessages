@@ -1,6 +1,6 @@
-{
-  "id": "velocityannouces",
-  "name": "VelocityAnnouces",
+﻿{
+  "id": "ymessages",
+  "name": "yMessages",
   "version": "1.0.0",
   "description": "Lightweight announcement plugin for Velocity",
   "authors": ["OneLimit"],
@@ -10,5 +10,6 @@
       "optional": false
     }
   ],
-  "main": "dev.onelimit.velocityannouces.VelocityAnnoucesPlugin"
+  "main": "dev.onelimit.ymessages.YMessagesPlugin"
 }
+

@@ -1,4 +1,4 @@
-# VelocityAnnouces Configuration
+# yMessages Configuration
 # Config Version: This is tracked for future schema upgrades.
 config-version: 2
 
@@ -9,7 +9,7 @@ command:
   enabled: true
   aliases: ["vannounce", "vannouce", "announce"]
   require-permission: false
-  permission: "velocityannouces.admin"
+  permission: "ymessages.admin"
 
 # Chat announcements - broadcast on independent interval
 chat:
