@@ -6,8 +6,8 @@ import dev.onelimit.velocityannouces.VelocityAnnoucesPlugin;
 import dev.onelimit.velocityannouces.announce.AnnouncementService;
 import dev.onelimit.velocityannouces.model.AnnounceMode;
 import dev.onelimit.velocityannouces.model.PluginConfig;
+import dev.onelimit.ycore.velocity.api.text.CoreTextRenderer;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,12 +17,12 @@ import java.util.concurrent.CompletableFuture;
 public final class AnnounceCommand implements SimpleCommand {
     private final VelocityAnnoucesPlugin plugin;
     private final AnnouncementService announcementService;
-    private final MiniMessage miniMessage;
+    private final CoreTextRenderer textRenderer;
 
     public AnnounceCommand(VelocityAnnoucesPlugin plugin, AnnouncementService announcementService) {
         this.plugin = plugin;
         this.announcementService = announcementService;
-        this.miniMessage = MiniMessage.miniMessage();
+        this.textRenderer = new CoreTextRenderer();
     }
 
     @Override
@@ -97,7 +97,7 @@ public final class AnnounceCommand implements SimpleCommand {
     }
 
     private Component msg(String mm) {
-        return miniMessage.deserialize(mm);
+        return textRenderer.render(mm);
     }
 
     private List<String> filter(List<String> all, String prefix) {

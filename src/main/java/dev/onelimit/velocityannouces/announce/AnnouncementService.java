@@ -8,13 +8,15 @@ import dev.onelimit.velocityannouces.model.AnnounceMode;
 import dev.onelimit.velocityannouces.model.AnnouncementTypeConfig;
 import dev.onelimit.velocityannouces.model.PluginConfig;
 import dev.onelimit.ycore.velocity.api.text.CoreTextRenderer;
+import dev.onelimit.ycore.velocity.api.util.CorePlaceholders;
+import dev.onelimit.ycore.velocity.api.util.CoreValueParsers;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.TimeUnit;
@@ -283,8 +285,8 @@ public final class AnnouncementService {
         BossBar bossBar = BossBar.bossBar(
             render(applyProgressToken(message, 0f)),
             0f,
-            parseColor(config.bossbarConfig().defaultColor()),
-            parseOverlay(config.bossbarConfig().defaultOverlay())
+            CoreValueParsers.parseEnum(BossBar.Color.class, config.bossbarConfig().defaultColor(), BossBar.Color.BLUE),
+            CoreValueParsers.parseEnum(BossBar.Overlay.class, config.bossbarConfig().defaultOverlay(), BossBar.Overlay.PROGRESS)
         );
 
         activeBossbar = bossBar;
@@ -304,7 +306,7 @@ public final class AnnouncementService {
         activeBossbarAnimation = server.getScheduler()
             .buildTask(plugin, () -> {
                 int passed = elapsed.incrementAndGet();
-                float progress = clamp((float) passed / (float) totalSeconds, 0f, 1f);
+                float progress = CoreValueParsers.clamp((float) passed / (float) totalSeconds, 0f, 1f);
 
                 bossBar.progress(progress);
                 bossBar.name(render(applyProgressToken(message, progress)));
@@ -333,38 +335,11 @@ public final class AnnouncementService {
 
     private String applyProgressToken(String rawInput, float progress) {
         String safe = rawInput == null ? "" : rawInput;
-        int percent = Math.round(clamp(progress, 0f, 1f) * 100f);
-        return safe
-            .replace("<progress>", percent + "%")
-            .replace("{progress}", Integer.toString(percent));
-    }
-
-    private float clamp(float value, float min, float max) {
-        return Math.max(min, Math.min(max, value));
-    }
-
-    private BossBar.Color parseColor(String value) {
-        if (value == null) {
-            return BossBar.Color.BLUE;
-        }
-
-        try {
-            return BossBar.Color.valueOf(value.trim().toUpperCase(Locale.ROOT));
-        } catch (IllegalArgumentException ex) {
-            return BossBar.Color.BLUE;
-        }
-    }
-
-    private BossBar.Overlay parseOverlay(String value) {
-        if (value == null) {
-            return BossBar.Overlay.PROGRESS;
-        }
-
-        try {
-            return BossBar.Overlay.valueOf(value.trim().toUpperCase(Locale.ROOT));
-        } catch (IllegalArgumentException ex) {
-            return BossBar.Overlay.PROGRESS;
-        }
+        int percent = Math.round(CoreValueParsers.clamp(progress, 0f, 1f) * 100f);
+        return CorePlaceholders.replaceExact(safe, Map.of(
+            "<progress>", percent + "%",
+            "{progress}", Integer.toString(percent)
+        ));
     }
 
     private void cancelActiveBossbar() {

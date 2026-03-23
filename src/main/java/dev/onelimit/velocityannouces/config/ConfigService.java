@@ -3,6 +3,7 @@ package dev.onelimit.velocityannouces.config;
 import dev.onelimit.velocityannouces.model.AnnounceMode;
 import dev.onelimit.velocityannouces.model.AnnouncementTypeConfig;
 import dev.onelimit.velocityannouces.model.PluginConfig;
+import dev.onelimit.ycore.velocity.api.config.ConfigValueReader;
 import dev.onelimit.ycore.velocity.api.config.YamlConfigLoader;
 import org.slf4j.Logger;
 
@@ -31,13 +32,13 @@ public final class ConfigService {
 
     @SuppressWarnings("unchecked")
     private PluginConfig parse(Map<?, ?> root) {
-        int configVersion = integer(root.get("config-version"), 2);
-        boolean debug = bool(root.get("debug"), false);
+        int configVersion = ConfigValueReader.integer(root.get("config-version"), 2);
+        boolean debug = ConfigValueReader.bool(root.get("debug"), false);
 
-        Map<String, Object> command = map(root.get("command"));
-        boolean commandEnabled = bool(command.get("enabled"), true);
-        boolean commandRequirePermission = bool(command.get("require-permission"), false);
-        String commandPermission = string(command.get("permission"), "velocityannouces.admin");
+        Map<String, Object> command = ConfigValueReader.map(root.get("command"));
+        boolean commandEnabled = ConfigValueReader.bool(command.get("enabled"), true);
+        boolean commandRequirePermission = ConfigValueReader.bool(command.get("require-permission"), false);
+        String commandPermission = ConfigValueReader.string(command.get("permission"), "velocityannouces.admin");
 
         List<String> aliases = new ArrayList<>();
         Object aliasesNode = command.get("aliases");
@@ -76,11 +77,11 @@ public final class ConfigService {
     }
 
     private AnnouncementTypeConfig parseTypeConfig(Map<?, ?> root, String typeKey, AnnounceMode mode) {
-        Map<String, Object> section = map(root.get(typeKey));
+        Map<String, Object> section = ConfigValueReader.map(root.get(typeKey));
         
-        boolean enabled = bool(section.get("enabled"), true);
-        int intervalSeconds = Math.max(5, integer(section.get("interval-seconds"), 120));
-        boolean randomSelection = !"round-robin".equalsIgnoreCase(string(section.get("selection"), "random").trim());
+        boolean enabled = ConfigValueReader.bool(section.get("enabled"), true);
+        int intervalSeconds = Math.max(5, ConfigValueReader.integer(section.get("interval-seconds"), 120));
+        boolean randomSelection = !"round-robin".equalsIgnoreCase(ConfigValueReader.string(section.get("selection"), "random").trim());
         
         List<String> messages = new ArrayList<>();
         Object messagesNode = section.get("messages");
@@ -90,14 +91,14 @@ public final class ConfigService {
                     messages.add(str);
                 } else if (item instanceof Map<?, ?> map && mode == AnnounceMode.TITLE) {
                     // Title messages have title/subtitle structure
-                    String title = string(map.get("title"), "");
-                    String subtitle = string(map.get("subtitle"), "");
+                    String title = ConfigValueReader.string(map.get("title"), "");
+                    String subtitle = ConfigValueReader.string(map.get("subtitle"), "");
                     if (!title.isEmpty()) {
                         messages.add(title + "|" + subtitle);
                     }
                 } else if (item instanceof Map<?, ?> map && mode == AnnounceMode.BOSSBAR) {
                     // Bossbar messages are defined as maps with a "message" field.
-                    String message = string(map.get("message"), "");
+                    String message = ConfigValueReader.string(map.get("message"), "");
                     if (!message.isEmpty()) {
                         messages.add(message);
                     }
@@ -105,14 +106,14 @@ public final class ConfigService {
             }
         }
 
-        int fadeInMs = integer(section.get("fade-in-ms"), 400);
-        int stayMs = integer(section.get("stay-ms"), 2200);
-        int fadeOutMs = integer(section.get("fade-out-ms"), 500);
+        int fadeInMs = ConfigValueReader.integer(section.get("fade-in-ms"), 400);
+        int stayMs = ConfigValueReader.integer(section.get("stay-ms"), 2200);
+        int fadeOutMs = ConfigValueReader.integer(section.get("fade-out-ms"), 500);
 
-        Map<String, Object> defaults = map(section.get("defaults"));
-        String defaultColor = string(defaults.get("color"), "blue");
-        String defaultOverlay = string(defaults.get("overlay"), "progress");
-        int animationSpeed = integer(defaults.get("animation-speed"), 5);
+        Map<String, Object> defaults = ConfigValueReader.map(section.get("defaults"));
+        String defaultColor = ConfigValueReader.string(defaults.get("color"), "blue");
+        String defaultOverlay = ConfigValueReader.string(defaults.get("overlay"), "progress");
+        int animationSpeed = ConfigValueReader.integer(defaults.get("animation-speed"), 5);
 
         return new AnnouncementTypeConfig(
             enabled,
@@ -126,76 +127,5 @@ public final class ConfigService {
             defaultOverlay,
             animationSpeed
         );
-    }
-
-    private Map<String, Object> map(Object input) {
-        if (input instanceof Map<?, ?> source) {
-            return (Map<String, Object>) source;
-        }
-        return Map.of();
-    }
-
-    private Map<String, Object> firstMap(Map<?, ?> root, String... keys) {
-        for (String key : keys) {
-            Map<String, Object> mapped = map(root.get(key));
-            if (!mapped.isEmpty()) {
-                return mapped;
-            }
-        }
-        return Map.of();
-    }
-
-    private String string(Object input, String fallback) {
-        if (input == null) {
-            return fallback;
-        }
-        String value = String.valueOf(input);
-        return value.isEmpty() ? fallback : value;
-    }
-
-    private int integer(Object input, int fallback) {
-        if (input == null) {
-            return fallback;
-        }
-        if (input instanceof Number n) {
-            return n.intValue();
-        }
-        try {
-            return Integer.parseInt(String.valueOf(input));
-        } catch (NumberFormatException ex) {
-            return fallback;
-        }
-    }
-
-    private float decimal(Object input, float fallback) {
-        if (input == null) {
-            return fallback;
-        }
-        if (input instanceof Number n) {
-            return n.floatValue();
-        }
-        try {
-            return Float.parseFloat(String.valueOf(input));
-        } catch (NumberFormatException ex) {
-            return fallback;
-        }
-    }
-
-    private boolean bool(Object input, boolean fallback) {
-        if (input == null) {
-            return fallback;
-        }
-        if (input instanceof Boolean b) {
-            return b;
-        }
-        return Boolean.parseBoolean(String.valueOf(input));
-    }
-
-    private boolean parseSelection(Map<String, Object> announcer) {
-        String selection = string(announcer.get("selection"), "").trim().toLowerCase();
-        if (selection.isEmpty()) {
-            return bool(announcer.get("random-pick"), true);
-        }
-        return !"round-robin".equals(selection);
     }
 }
