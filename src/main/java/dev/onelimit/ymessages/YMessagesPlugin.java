@@ -56,7 +56,7 @@ public final class YMessagesPlugin {
         if (config.debug()) {
             logger.info("Debug mode enabled. Config version: {}", config.configVersion());
         }
-            announcementService.updateConfig(config);
+        announcementService.updateConfig(config);
         logger.info("Config reloaded successfully.");
     }
 

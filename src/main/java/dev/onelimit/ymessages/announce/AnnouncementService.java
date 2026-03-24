@@ -235,7 +235,7 @@ public final class AnnouncementService {
                 plugin.logger().info("Selected random {} message index={}", mode.name().toLowerCase(), actualIndex);
             }
         } else {
-            actualIndex = index % typeConfig.messages().size();
+            actualIndex = Math.floorMod(index, typeConfig.messages().size());
             if (config.debug()) {
                 plugin.logger().info("Selected round-robin {} message index={}", mode.name().toLowerCase(), actualIndex);
             }
@@ -301,17 +301,18 @@ public final class AnnouncementService {
 
         AtomicInteger elapsed = new AtomicInteger(0);
         int animationSpeed = Math.max(1, config.bossbarConfig().animationSpeed());
+        long totalUpdates = totalSeconds * animationSpeed;
         long updateIntervalMs = 1000 / animationSpeed;
 
         activeBossbarAnimation = server.getScheduler()
             .buildTask(plugin, () -> {
                 int passed = elapsed.incrementAndGet();
-                float progress = CoreValueParsers.clamp((float) passed / (float) totalSeconds, 0f, 1f);
+                float progress = CoreValueParsers.clamp((float) passed / (float) totalUpdates, 0f, 1f);
 
                 bossBar.progress(progress);
                 bossBar.name(render(applyProgressToken(message, progress)));
 
-                if (passed >= totalSeconds) {
+                if (passed >= totalUpdates) {
                     for (Player player : players) {
                         player.hideBossBar(bossBar);
                     }

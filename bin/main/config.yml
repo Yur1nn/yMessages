@@ -1,0 +1,59 @@
+# yMessages Configuration
+# Config Version: This is tracked for future schema upgrades.
+config-version: 2
+
+# Debug mode: Enable for verbose logging
+debug: false
+
+command:
+  enabled: true
+  aliases: ["vannounce", "vannouce", "announce"]
+  require-permission: false
+  permission: "ymessages.admin"
+
+# Chat announcements - broadcast on independent interval
+chat:
+  enabled: true
+  interval-seconds: 120
+  selection: random  # random | round-robin
+  messages:
+    - "<modern>join our discord</modern> <gray>-</gray> <aqua>discord.gg/example"
+
+# Actionbar announcements - broadcast on independent interval
+actionbar:
+  enabled: true
+  interval-seconds: 90
+  selection: random
+  messages:
+    - "<green>Store:</green> <modern>shop.example.net</modern>"
+
+# Title announcements - broadcast on independent interval
+title:
+  enabled: true
+  interval-seconds: 150
+  selection: random
+  fade-in-ms: 400
+  stay-ms: 2200
+  fade-out-ms: 500
+  messages:
+    - title: "<gold><modern>weekly events</modern>"
+      subtitle: "<yellow>Saturday 8PM UTC"
+
+# Bossbar announcements - cycles through all entries with loading animation
+bossbar:
+  enabled: true
+  interval-seconds: 120  # Duration each bossbar is shown before next rotation
+  selection: round-robin  # Cycles through in order or random selection
+  defaults:
+    color: blue
+    overlay: progress
+    animation-speed: 5
+  messages:
+    - message: "<aqua><modern>loading event 1</modern> <gray>(<progress>)"
+      color: blue
+    - message: "<green><modern>loading event 2</modern> <gray>(<progress>)"
+      color: green
+    - message: "<gold><modern>loading event 3</modern> <gray>(<progress>)"
+      color: yellow
+    - message: "<red><modern>loading event 4</modern> <gray>(<progress>)"
+      color: red
