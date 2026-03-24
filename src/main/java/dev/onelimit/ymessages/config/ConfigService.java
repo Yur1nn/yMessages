@@ -30,7 +30,6 @@ public final class ConfigService {
         return configLoader.load();
     }
 
-    @SuppressWarnings("unchecked")
     private PluginConfig parse(Map<?, ?> root) {
         int configVersion = ConfigValueReader.integer(root.get("config-version"), 2);
         boolean debug = ConfigValueReader.bool(root.get("debug"), false);
